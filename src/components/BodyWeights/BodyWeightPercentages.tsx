@@ -56,8 +56,6 @@ export default async function BodyWeightPercentages() {
 
     // and rounds to 2d.p
     function PercentageChange(newValue: number, oldValue: number): number{
-        //console.log(newValue)
-        //console.log(oldValue)
         return parseFloat((((newValue- oldValue)/ oldValue) * 100).toFixed(2))
     }
 

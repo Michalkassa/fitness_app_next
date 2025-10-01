@@ -42,9 +42,7 @@ export default function RunningExercise({ id , name, workoutId, exerciseId, subm
     useEffect(() => {
         async function fetchData() {
           try {
-            console.log(sets.length)
             const fetchdata = await getPreviousLogs(exerciseId, sets.length);
-            console.log(fetchdata)
             setLastSets(fetchdata);
           } catch (error) {
             console.error("Error fetching data SERVER ACTION:", error);

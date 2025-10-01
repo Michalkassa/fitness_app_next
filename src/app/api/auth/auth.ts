@@ -3,6 +3,7 @@ import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@/app/api/prisma"
+import bcrypt from 'bcrypt'
 
 export const config = {
   adapter: PrismaAdapter(prisma),
@@ -13,7 +14,6 @@ export const config = {
         password: { label: "Password", type: "password" }
       },
       authorize: async (credentials): Promise<any> => {
-        console.log(credentials)
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -28,7 +28,7 @@ export const config = {
           if (!user || !user.password) {
             return null
           }
-          const isPasswordValid = (credentials.password == (user.password as string))
+          const isPasswordValid =  bcrypt.compare(credentials.password as string, user.password as string)
 
           if (!isPasswordValid) {
             return null

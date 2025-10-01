@@ -25,7 +25,6 @@ export default function RunningWorkoutTimer({submit}: Timer){
 
     const getTime = (t:any) => {
         const time =  t - Date.now();
-        console.log(time)
         setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
         setMinutes(Math.floor((time / 1000 / 60) % 60));
         setSeconds(Math.floor((time / 1000) % 60));
@@ -39,7 +38,6 @@ export default function RunningWorkoutTimer({submit}: Timer){
     
 
     useEffect(() => {
-        console.log("submit")
         setStartTime(0)
     }, [submit])
 

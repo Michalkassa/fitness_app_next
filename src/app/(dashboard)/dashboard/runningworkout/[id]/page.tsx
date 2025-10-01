@@ -11,7 +11,6 @@ export default async function RunningWorkoutpage({params}:{params:{id : string}}
     const session = await auth();
     if (!session) return redirect("/")
       
-    console.log(params.id)
     const workout = await getWorkout(params.id)
     if (!workout) return redirect("/dashboard/workouts")
     

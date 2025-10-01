@@ -25,7 +25,6 @@ async function getData(){
  
 export default async function BodyWeightChart() { 
   const chartData = await getData()
-  console.log(chartData)
   if(chartData.labels.length > 0){
     return  <LineChart chartData={chartData} />
   }

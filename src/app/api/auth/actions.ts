@@ -464,7 +464,6 @@ export const addExerciseToWorkout = async (workoutId:string , exerciseId:string)
             workoutId: workoutId
         }
     })
-    console.log(checkExistance)
     if(checkExistance.length != 0) return
 
     const addExerciseToWorkout = await prisma.exercisesOnWorkouts.create({
