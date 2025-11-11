@@ -1,22 +1,23 @@
 "use server"
-import {GET} from "@/app/api/auth/auth"
 import { revalidatePath } from 'next/cache'
-import AddBodyWeight from "@/components/BodyWeights/AddBodyWeight"
 import prisma from '@/app/api/prisma'
 import {redirect} from "next/navigation"
 import { signIn } from '@/app/api/auth/auth'
-import { auth } from './auth';
+import { auth } from './auth'
+import bcrypt from 'bcrypt'
+
 //Brzycki - The most popular 1 rep max calculation formula from Matt Brzycki
 const oneRepMaxCalculator = (kgWeight: number, repetitions: number):number => {
     return  Math.floor((kgWeight / ( 1.0278 + (-0.0278 * repetitions))))
 }
 
-export const SignIn = async (state: any, formData: any) => {
-    const email = formData.get("email")
-    const password = formData.get("password")
+
+export const SignIn = async (formData: FormData) => {
+    const email = formData.get("email") as string
+    const password = formData.get("password") as string
     
     if (!email && !password){
-        return { message: "Login data is Missing"}
+        return { message: "Login data s is Missing"}
     } 
     if (!email){
         return { message: "Please Enter an Email"}
@@ -50,21 +51,23 @@ export const SignIn = async (state: any, formData: any) => {
           return { message: "credentials not correct"}
         }
 
-        const isPasswordValid = (password == (user.password as string)) //TODO change to zcrypt compare
+        const isPasswordValid = bcrypt.compare(password as string , user.password as string)
 
         if (!isPasswordValid) {
           return { message: "credentials not correct"}
         }
         await signIn("credentials", formData);
     }
-    catch{}
+    catch(err){
+        throw err
+    }
     redirect("/dashboard")
 }
 
-export const registerUser = async (state: any, formData: any) => {
-    const email = formData.get("email")
-    const password = formData.get("password")
-    const repeatPassword = formData.get("confirm-password")
+export const registerUser = async (formData: FormData) => {
+    const email = formData.get("email") as string
+    const password = formData.get("password") as string
+    const repeatPassword = formData.get("confirm-password") as string
 
     if (!email && !password){
         return { message: "Login data is Missing"}
@@ -90,28 +93,34 @@ export const registerUser = async (state: any, formData: any) => {
         })
 
         if (user) {
-          return { message: "user allready exists"}
+          return { message: "user already exists"}
         }
 
-        const createdUser = await prisma.user.create({
-            data: {
-                email: email,
-                password: password //TODO make sure this is encrypted
-            }
-          })
-        await signIn("credentials", formData);
+        const hash = await bcrypt.hash(password, 10);
+        
+        const newUser = await prisma.user.create({
+                        data: {
+                            email: email,
+                            password: hash 
+                        }
+                    })
+    
+        await signIn("credentials", formData); 
+
     }
-    catch{}
+    catch(err){
+        throw err
+    }
     redirect("/dashboard")
 }
 
 
 
-export const getUser = async({props}:any) => {
+export const getUser = async(email:string) => {
     const user = await prisma.user.findUnique(
         { 
             where: {
-                email : props.email
+                email : email
             },
     });
     return user
@@ -132,7 +141,7 @@ export const getWeights = async () => {
 }
 
 
-export const addBodyWeight = async (state: any, formData: any) => {
+export const addBodyWeight = async (formData: FormData) => {
     const session = await auth();
     const bodyWeight = formData.get('weight');
     if(!bodyWeight){
@@ -175,7 +184,7 @@ export const getExercises = async () => {
     return exercises
 }
 
-export const addExercise = async (state: any, formData: any) => {
+export const addExercise = async (formData: FormData) => {
     const session = await auth();
     const name = formData.get('name') as string;
     const description = formData.get('description') as string;
@@ -301,7 +310,7 @@ export const deleteLogs = async (exerciseId:string) => {
     })
 };
 
-export const addLogFromForm = async (state:any, formData:any) => {
+export const addLogFromForm = async (formData: FormData) => {
     const session = await auth();
     const exerciseId = formData.get("exerciseId") as string
     const weight = Number(formData.get("weight"))
@@ -386,7 +395,7 @@ export const getWorkouts = async () => {
     return workouts
 }
 
-export const getExercisesWorkoutPairs = async (workoutId:string,) => {
+export const getExercisesWorkoutPairs = async (workoutId:string) => {
     const ExercisesWorkoutPairs = await prisma.exercisesOnWorkouts.findMany(
         { 
             where: {
@@ -402,7 +411,7 @@ export const getExercisesWorkoutPairs = async (workoutId:string,) => {
     return []
 }
 
-export const addWorkout = async (state: any, formData: any) => {
+export const addWorkout = async (formData: FormData) => {
     const session = await auth();
     const name = formData.get('name') as string;
     const description = formData.get('description') as string;

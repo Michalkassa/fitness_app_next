@@ -10,7 +10,7 @@ export default async function Dashboard() {
   if (!session) return redirect("/")
 
   return (  
-    <div className="flex flex-col h-full md:grid md:grid-rows-2 md:grid-cols-dashboard_elements md:gap-5 gap-3 p-1 md:p7 justify-between pb-28">
+    <div className="flex flex-col h-full md:grid md:grid-rows-2 md:grid-cols-dashboard_elements md:gap-5 gap-3 p-1 md:p7 justify-between">
       <div className="bg-sleek_gray bg-opacity-40 rounded-3xl p-7">
         <Link href="/dashboard/bodyweights">
         <h1 className="text-white">Bodyweight Progress</h1>
