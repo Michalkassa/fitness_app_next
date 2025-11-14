@@ -19,7 +19,7 @@ export default function BodyWeight({ id , date , weight} :
         router.refresh()
     }
     return(
-        <div key={id} className="border-2 border-white flex justify-around">
+        <div key={id} className="border-2 flex justify-around">
             <p className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{date}</p>
             <p className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{weight}</p>
             <div className="flex items-center align-middle">
@@ -32,7 +32,7 @@ export default function BodyWeight({ id , date , weight} :
                     <h2>Are you sure you want to delete it? There is no way to recover it after this point!</h2>
                     <div className="flex gap-3">
                     <button
-                        className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-red shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                        className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-red shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[open]:bg-gray-700"
                         onClick={handleDelete}
                         type="submit"
                         
@@ -40,7 +40,7 @@ export default function BodyWeight({ id , date , weight} :
                     DELETE
                     </button>
                     <button
-                        className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                        className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[open]:bg-gray-700"
                         onClick={()=> setModalOpenDelete(false)}
                         type="submit"
                         

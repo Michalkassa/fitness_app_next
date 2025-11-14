@@ -13,6 +13,7 @@ export default async function Workouts() {
     <section className="flex flex-col align-middle" >
         <div className="flex justify-around py-6">
           <h1 className="text-5xl text-white">Workouts</h1>
+          <AddWorkout></AddWorkout>
         </div>
         <div className="flex w-screen justify-center w-full h-4/6">
         <div className="max-w-6xl">

@@ -12,7 +12,7 @@ const oneRepMaxCalculator = (kgWeight: number, repetitions: number):number => {
 }
 
 
-export const SignIn = async (formData: FormData) => {
+export const SignIn = async (prevState:any, formData: FormData) => {
     const email = formData.get("email") as string
     const password = formData.get("password") as string
     
@@ -64,7 +64,7 @@ export const SignIn = async (formData: FormData) => {
     redirect("/dashboard")
 }
 
-export const registerUser = async (formData: FormData) => {
+export const registerUser = async (prevState:any, formData: FormData) => {
     const email = formData.get("email") as string
     const password = formData.get("password") as string
     const repeatPassword = formData.get("confirm-password") as string
@@ -141,7 +141,7 @@ export const getWeights = async () => {
 }
 
 
-export const addBodyWeight = async (formData: FormData) => {
+export const addBodyWeight = async (prevState:any, formData: FormData) => {
     const session = await auth();
     const bodyWeight = formData.get('weight');
     if(!bodyWeight){
@@ -184,7 +184,7 @@ export const getExercises = async () => {
     return exercises
 }
 
-export const addExercise = async (formData: FormData) => {
+export const addExercise = async (prevState:any, formData: FormData) => {
     const session = await auth();
     const name = formData.get('name') as string;
     const description = formData.get('description') as string;
@@ -310,7 +310,7 @@ export const deleteLogs = async (exerciseId:string) => {
     })
 };
 
-export const addLogFromForm = async (formData: FormData) => {
+export const addLogFromForm = async (prevState:any, formData: FormData) => {
     const session = await auth();
     const exerciseId = formData.get("exerciseId") as string
     const weight = Number(formData.get("weight"))
@@ -411,7 +411,7 @@ export const getExercisesWorkoutPairs = async (workoutId:string) => {
     return []
 }
 
-export const addWorkout = async (formData: FormData) => {
+export const addWorkout = async (prevState:any,formData: FormData) => {
     const session = await auth();
     const name = formData.get('name') as string;
     const description = formData.get('description') as string;
