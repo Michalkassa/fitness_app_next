@@ -4,7 +4,7 @@ import prisma from '@/app/api/prisma'
 import {redirect} from "next/navigation"
 import { signIn } from '@/app/api/auth/auth'
 import { auth } from './auth'
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcrypt'
 
 //Brzycki - The most popular 1 rep max calculation formula from Matt Brzycki
 const oneRepMaxCalculator = (kgWeight: number, repetitions: number):number => {
