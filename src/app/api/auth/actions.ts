@@ -11,8 +11,11 @@ const oneRepMaxCalculator = (kgWeight: number, repetitions: number):number => {
     return  Math.floor((kgWeight / ( 1.0278 + (-0.0278 * repetitions))))
 }
 
+type prevState = {
+    message: string;
+}
 
-export const SignIn = async (prevState:any, formData: FormData) => {
+export const SignIn = async (prevState:prevState, formData: FormData) => {
     const email = formData.get("email") as string
     const password = formData.get("password") as string
     
@@ -64,7 +67,7 @@ export const SignIn = async (prevState:any, formData: FormData) => {
     redirect("/dashboard")
 }
 
-export const registerUser = async (prevState:any, formData: FormData) => {
+export const registerUser = async (prevState:prevState, formData: FormData) => {
     const email = formData.get("email") as string
     const password = formData.get("password") as string
     const repeatPassword = formData.get("confirm-password") as string
@@ -141,7 +144,7 @@ export const getWeights = async () => {
 }
 
 
-export const addBodyWeight = async (prevState:any, formData: FormData) => {
+export const addBodyWeight = async (prevState:prevState, formData: FormData) => {
     const session = await auth();
     const bodyWeight = formData.get('weight');
     if(!bodyWeight){
@@ -184,7 +187,7 @@ export const getExercises = async () => {
     return exercises
 }
 
-export const addExercise = async (prevState:any, formData: FormData) => {
+export const addExercise = async (prevState:prevState, formData: FormData) => {
     const session = await auth();
     const name = formData.get('name') as string;
     const description = formData.get('description') as string;
@@ -310,7 +313,7 @@ export const deleteLogs = async (exerciseId:string) => {
     })
 };
 
-export const addLogFromForm = async (prevState:any, formData: FormData) => {
+export const addLogFromForm = async (prevState:prevState, formData: FormData) => {
     const session = await auth();
     const exerciseId = formData.get("exerciseId") as string
     const weight = Number(formData.get("weight"))
@@ -411,7 +414,7 @@ export const getExercisesWorkoutPairs = async (workoutId:string) => {
     return []
 }
 
-export const addWorkout = async (prevState:any,formData: FormData) => {
+export const addWorkout = async (prevState:prevState,formData: FormData) => {
     const session = await auth();
     const name = formData.get('name') as string;
     const description = formData.get('description') as string;
